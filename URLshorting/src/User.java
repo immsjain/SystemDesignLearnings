@@ -1,6 +1,6 @@
 public class User {
-    private int id;
-    private String name;
+    int id;
+    String name;
 
     public User(int id, String name) {
         this.id = id;
@@ -23,7 +23,8 @@ public class User {
         this.name = name;
     }
 
-    public Request createRequest(int id, Data data, int timestamp){
-        return new Request(id,data,this,timestamp);
+    public ShortUrl getShortUrl(LongUrl url, UrlShortner urlShortner){
+        ShortUrl shortUrl =  urlShortner.getShortUrl(url);
+        return shortUrl;
     }
 }
