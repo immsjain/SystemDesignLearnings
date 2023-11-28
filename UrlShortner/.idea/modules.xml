@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/URLshorting.iml" filepath="$PROJECT_DIR$/URLshorting.iml" />
+      <module fileurl="file://$PROJECT_DIR$/URLShortner.iml" filepath="$PROJECT_DIR$/URLShortner.iml" />
     </modules>
   </component>
 </project>
