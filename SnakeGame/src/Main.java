@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         SnakeGame snakeGame = SnakeGame.getBuilder().addCurrentPos(0,0)
+                .setStrategy(new BoundryCrossMovingStrategy())
                 .addHeight(5)
                 .addWidht(5)
                 .build();
@@ -15,7 +16,7 @@ public class Main {
             System.out.println("food cant be added");
         }
 
-        if(snakeGame.addFood(new Cell(4,1))){
+        if(snakeGame.addFood(new Cell(1,1))){
             System.out.println("food is added successfully");
         }else{
             System.out.println("food cant be added");
@@ -26,16 +27,31 @@ public class Main {
         }else{
             System.out.println("food cant be added");
         }
+
+        if(snakeGame.addFood(new Cell(4,4))){
+            System.out.println("food is added successfully");
+        }else{
+            System.out.println("food cant be added");
+        }
+
+        if(snakeGame.addFood(new Cell(2,4))){
+            System.out.println("food is added successfully");
+        }else{
+            System.out.println("food cant be added");
+        }
+
+        if(snakeGame.addFood(new Cell(3,2))){
+            System.out.println("food is added successfully");
+        }else{
+            System.out.println("food cant be added");
+        }
         Direction lastMoveDir= Direction.RIGHT;
         Scanner scanner = new Scanner(System.in);
         do{
-
-
+            System.out.println(snakeGame.getQueue());
+            System.out.println("Current Position: " + snakeGame.getCurrPos().getRow() + ", "+ snakeGame.getCurrPos().getCol());
             System.out.print("Enter Direction : ");
-
             String userInput = scanner.nextLine();
-
-
             System.out.println("You entered direction: " + userInput);
             if(userInput.equals("L")){
                 lastMoveDir = Direction.LEFT;

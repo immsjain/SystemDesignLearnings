@@ -6,19 +6,22 @@ public class SnakeGame {
     private int height;
     private int foodIdx;
     private int score;
+
+    private SnakeMovingStrategy snakeMovingStrategy;
     private Queue<Cell>queue = new LinkedList<>();
 
     private List<Cell>foodidxs = new LinkedList<>();
 
     private Set<Cell> blocked = new HashSet<>();
 
-    private SnakeGame(Cell currPos, int width, int height, List<Cell> foodidxs) {
+    private SnakeGame(Cell currPos, int width, int height, List<Cell> foodidxs, SnakeMovingStrategy snakeMovingStrategy) {
         this.currPos = currPos;
         this.width = width;
         this.height = height;
         this.foodidxs = foodidxs;
         this.score = 0;
         this.foodIdx=0;
+        this.snakeMovingStrategy = snakeMovingStrategy;
     }
 
     public static SnakeGameBuilder getBuilder(){
@@ -29,6 +32,7 @@ public class SnakeGame {
         private Cell currPos;
         private int width;
         private int height;
+        private SnakeMovingStrategy snakeMovingStrategy;
 
         public SnakeGameBuilder addCurrentPos(int row,int col){
             Cell cell = new Cell(row,col);
@@ -46,8 +50,13 @@ public class SnakeGame {
             return this;
         }
 
+        public SnakeGameBuilder setStrategy(SnakeMovingStrategy strategy){
+            this.snakeMovingStrategy = strategy;
+            return this;
+        }
+
         public SnakeGame build(){
-            SnakeGame snakeGame = new SnakeGame(this.currPos,this.width,this.height,new LinkedList<>());
+            SnakeGame snakeGame = new SnakeGame(this.currPos,this.width,this.height,new LinkedList<>(),snakeMovingStrategy);
             return snakeGame;
         }
 
@@ -117,34 +126,8 @@ public class SnakeGame {
         this.blocked = blocked;
     }
 
-    public boolean move(Direction dir){
-        int r = currPos.getRow();
-        int c = currPos.getCol();
-        if(dir== Direction.DOWN){
-            r++;
-        }else if(dir==Direction.UP){
-            r--;
-        }else if(dir==Direction.LEFT){
-            c--;
-        }else if(dir==Direction.RIGHT){
-            c++;
-        }else{
-            return false;
-        }
-        if(r<0 || r>=height || c<0 || c>=width){
-            return false;
-        }else if((foodIdx<foodidxs.size()) && foodidxs.get(foodIdx).getRow()==r && foodidxs.get(foodIdx).getCol()==c){
-            this.score++;
-            foodIdx++;
-        }else{
-            blocked.remove(queue.peek());
-            queue.poll();
-        }
-        Cell cell = new Cell(r,c);
-        queue.offer(cell);
-        blocked.add(cell);
-        currPos = cell;
-        return true;
+    public synchronized boolean move(Direction dir){
+        return snakeMovingStrategy.move(dir,this);
     }
 
     public boolean addFood(Cell cell){
