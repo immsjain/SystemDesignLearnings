@@ -5,7 +5,7 @@ import java.util.List;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        JobScheduler jobScheduler = new MapBasedJobScheduler();
+        JobScheduler jobScheduler = MapBasedJobScheduler.getInstance();
         Job job1 = new DanceJob("temprary");
         Job job2 = new InterviewJob("Atlassian interview");
         Job job3 = new CodingJob("DP");
@@ -20,6 +20,10 @@ public class Main {
         jobScheduler.scheduleReq(request3);
         jobScheduler.scheduleReq(request4);
         jobScheduler.executeRequest(new Date(2023,7,21,1,35,23));
+
+        JobExecutionThread jobExecutionThread = new JobExecutionThread();
+        Thread t1 = new Thread(jobExecutionThread);
+        t1.start();
 
     }
 }

@@ -3,7 +3,9 @@ import java.util.*;
 public class MapBasedJobScheduler implements JobScheduler{
     Map<Date,List<Job>>map;
 
-    public MapBasedJobScheduler() {
+    private static MapBasedJobScheduler instance = null;
+
+    private MapBasedJobScheduler() {
         this.map = new HashMap<>();
     }
 
@@ -13,6 +15,18 @@ public class MapBasedJobScheduler implements JobScheduler{
 
     public void setMap(Map<Date, List<Job>> map) {
         this.map = map;
+    }
+
+
+    public static MapBasedJobScheduler getInstance(){
+        if(instance == null ){
+            synchronized (MapBasedJobScheduler.class){
+                if(instance==null){
+                    instance = new MapBasedJobScheduler();
+                }
+            }
+        }
+        return instance;
     }
 
     @Override
