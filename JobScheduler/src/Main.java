@@ -21,9 +21,8 @@ public class Main {
         jobScheduler.scheduleReq(request4);
         jobScheduler.executeRequest(new Date(2023,7,21,1,35,23));
 
-        JobExecutionThread jobExecutionThread = new JobExecutionThread();
-        Thread t1 = new Thread(jobExecutionThread);
-        t1.start();
+        Thread jobExecutionThread = new JobExecutionThread();
+        jobExecutionThread.start();
 
     }
 }

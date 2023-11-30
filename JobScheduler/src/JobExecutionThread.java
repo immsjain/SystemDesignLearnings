@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class JobExecutionThread implements Runnable{
+public class JobExecutionThread extends Thread {
     @Override
     public void run() {
         JobScheduler jobScheduler= MapBasedJobScheduler.getInstance();
