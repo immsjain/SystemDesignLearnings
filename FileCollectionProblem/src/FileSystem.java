@@ -78,7 +78,7 @@ public class FileSystem {
 //            }
 //        };
 
-        Collections.sort(list);
+        Collections.sort(list, new CustomCompBySize());
 
         // Check if k is greater than the list size
         int sublistSize = Math.min(k, list.size());
