@@ -7,21 +7,34 @@ public class FileSystem {
     private int totalFileSize;
     private Map<File,List<UCollection>>map;
 
-    public FileSystem() {
+    private static FileSystem instance;
+
+    private FileSystem() {
         this.totalFileSize = 0;
         files = new ArrayList<>();
         map = new HashMap<>();
         collectionList = new ArrayList<>();
     }
 
-    public void addFile(File file){
+    public static FileSystem getInstance(){
+        if(instance==null){
+            synchronized (FileSystem.class){
+                if(instance==null){
+                    instance = new FileSystem();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public synchronized void addFile(File file){
         files.add(file);
         totalFileSize += file.getSize();
         if(!map.containsKey(file)){
             map.put(file,new ArrayList<>());
         }
     }
-    public void addFileCollection(File file,UCollection collection){
+    public synchronized void addFileCollection(File file,UCollection collection){
         collection.addFile(file);
         if(!map.containsKey(file)){
             map.put(file,new ArrayList<>());

@@ -10,7 +10,7 @@ public class Main {
         File file3 = new File("file3.txt", 200);
         File file4 = new File("file4.txt", 300);
         File file5 = new File("file5.txt", 100);
-        FileSystem fileSystem = new FileSystem();
+        FileSystem fileSystem = FileSystem.getInstance();
         fileSystem.addFile(file1);
         fileSystem.addFile(file2);
         fileSystem.addFile(file3);
